@@ -1,5 +1,5 @@
 #build
-cd E:\Dev\Docker\DockerPocApi\DockerPocWebApi\DockerPocWebApi>
+cd E:\Dev\Docker\DockerPocApi\DockerPocWebApi\DockerPocWebApi
 docker build -t dockerwebapi --force-rm -f Dockerfile .
 
 #run
