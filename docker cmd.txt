@@ -1,0 +1,14 @@
+#build
+cd E:\Dev\Docker\DockerPocApi\DockerPocWebApi\DockerPocWebApi>
+docker build -t dockerwebapi --force-rm -f Dockerfile .
+
+#run
+docker run -ti --rm -p 5000:5000 dockerwebapi
+
+go to http://localhost:5000/weatherforecast
+
+#inspect image
+docker run --rm -it --entrypoint bash dockerwebapi
+
+#inspect running image
+docker exec -it dockerwebapi bash
