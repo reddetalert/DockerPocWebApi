@@ -12,3 +12,19 @@ docker run --rm -it --entrypoint bash dockerwebapi
 
 #inspect running image
 docker exec -it dockerwebapi bash
+
+######## kubernetes with minikube
+
+#apply configuration
+kubectl apply -f manifest.yml
+
+#check pod
+kubectl get service -o wide
+
+# public IP address of the Kubernetes with this command (ex: KubeDNS is running at https://172.17.245.175:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy)
+kubectl cluster-info
+Access application here :  https://172.17.245.175:32403  (32403 is service port map : kubectl get service -o wide)
+
+#clean
+kubectl delete services dockerwebapi
+kubectl delete deployment dockerwebapi
