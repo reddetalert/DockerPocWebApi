@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using RandomDataGenerator.FieldOptions;
 using RandomDataGenerator.Randomizers;
@@ -19,18 +20,23 @@ namespace DockerPocWebApi.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfiguration configuration )
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         [HttpGet]
         public string Get()
         {
+
+            var secret = _configuration["UserPassword"];
+
             var randomizerTextRegex = RandomizerFactory.GetRandomizer(new FieldOptionsTextRegex { Pattern = @"^[0-9]{4}[A-Z]{2}" });
             string textRegex = randomizerTextRegex.Generate();
-            return textRegex;
+            return secret + " " + textRegex;
             //var rng = new Random();
             //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             //{

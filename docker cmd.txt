@@ -14,6 +14,13 @@ docker run --rm -it --entrypoint bash dockerwebapi
 docker exec -it dockerwebapi bash
 
 ######## kubernetes with minikube
+#push image to docker hub
+docker login
+docker tag dockerwebapi:latest slashnever/dockerwebapi
+docker push slashnever/dockerwebapi:latest
+
+#create secret, will be use in manifest.yml
+kubectl create secret generic secret-appsettings --from-file=./appsettings.secrets.json
 
 #apply configuration
 kubectl apply -f manifest.yml
@@ -28,3 +35,4 @@ Access application here :  https://172.17.245.175:32403  (32403 is service port 
 #clean
 kubectl delete services dockerwebapi
 kubectl delete deployment dockerwebapi
+

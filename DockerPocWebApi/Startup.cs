@@ -14,9 +14,15 @@ namespace DockerPocWebApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+               .SetBasePath(env.ContentRootPath)
+               .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+               .AddJsonFile("secrets/appsettings.secrets.json", optional: true)
+            .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -25,6 +31,8 @@ namespace DockerPocWebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddSingleton(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,6 +42,9 @@ namespace DockerPocWebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+
+
 
             app.UseRouting();
 
